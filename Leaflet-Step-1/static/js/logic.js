@@ -11,6 +11,20 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
+// Create a control for our layers, and add our overlays to it.
+L.control.layers(null).addTo(map);
+
+// Add legend to map
+var legend = L.control({
+    position: 'bottomright'
+});
+
+legend.onAdd = function (){
+    var div = L.DomUtil.create('div', 'info legend');
+    return div;
+};
+legend.addTo(map)
+
 // Add earthquake data to the map
 // Need to loop JSON and find data points
 // import JSON data  - This pulls the data
@@ -61,19 +75,26 @@ d3.json(url).then(function(data) {
         }).bindPopup("<b>Place:</b> " + data.features[i].properties.place + 
         "<br><b>Depth:</b> " +  location[2] + 
         "<br><b>Magitude:</b> " + data.features[i].properties.mag).addTo(map);
-    
 
-
-        // markers.addLayer(L.marker([data.features[i].geometry.coordinates[1], data.features[i].geometry.coordinates[0]])
-            // .bindPopup("<b>Place:</b> " + data.features[i].properties.place + 
-            // "<br><b>Depth:</b> " +  location[2] + 
-            // "<br><b>Magitude:</b> " + data.features[i].properties.mag));
-        
-          
     }
-    map.addLayer(markers);
+    // map.addLayer(markers);
 
+
+
+    myLegend();    
 
 });
 
+
+function myLegend() {
+    document.querySelector(".legend").innerHTML = [
+        "<p><strong>Depth</strong></p>",
+        "<p class='low'><div class='color-box' style='background-color: #ABEA64;'>-10 - 10</p></div>",
+        "<p class='lowish'><div class='color-box' style='background-color: #78AE3C;'>10 - 30</p></div>",
+        "<p class='mid'><div class='color-box' style='background-color: #FFC300;'>30 - 50</p></div>",
+        "<p class='high'><div class='color-box' style='background-color: #DE942F;'>50 - 70</p></div>",
+        "<p class='higher'><div class='color-box' style='background-color: #FF5733;'70 - 90</p></div>",
+        "<p class='highest'><div class='color-box' style='background-color: #C70039;'90+   </p></div>"
+      ].join("");
+}
 
