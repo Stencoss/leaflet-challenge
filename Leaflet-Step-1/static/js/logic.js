@@ -14,10 +14,10 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // Add earthquake data to the map
 // Need to loop JSON and find data points
 // import JSON data  - This pulls the data
-// url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson'
+url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson'
 
 // Experimnetinig with pulling data locally.
-url = 'earthquake.json'
+// url = 'earthquake.json'
 d3.json(url).then(function(data) {
 
     // console.log(data.features[0])  // Path to coordinates
